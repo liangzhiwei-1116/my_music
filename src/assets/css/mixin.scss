@@ -1,0 +1,129 @@
+@import "./variable.scss";
+/*
+  根据dpr像素比计算font-size
+  如果像素比为2 则将元素字体大小放大2倍
+*/
+@mixin font_dpr($font-size){
+  font-size: $font-size;
+  [data-dpr="2"] & { font-size: $font-size * 2;}
+  [data-dpr="3"] & { font-size: $font-size * 3;}
+}
+
+/*通过该函数设置字体大小，后期方便统一管理；*/
+@mixin font_size($size){
+  @include font_dpr($size);
+}
+
+// 不换行
+@mixin no-wrap(){
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+// 限制行数
+@mixin clamp($row){
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:$row;
+}
+
+// 根据属性选择器来设置背景颜色
+@mixin bg_color(){
+  background: $background-color-theme;
+  // 用自定义的属性去做判断
+  [data-theme=theme1] & {
+    background: $background-color-theme1;
+  }
+  [data-theme=theme2] & {
+    background: $background-color-theme2;
+  }
+}
+
+@mixin bg_img($url) {
+  // 设置图片样式
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  // 根据不同主题拼接图片路径更换logo图片
+  [data-theme=theme] & {
+    background-image: url($url + '_163.png');
+  }
+  [data-theme=theme1] & {
+    background-image: url($url + '_qq.png');
+  }
+  [data-theme=theme2] & {
+    background-image: url($url + '_it666.png');
+  }
+
+  // 根据像素比更换不同尺寸的图片
+  [data-theme=theme][data-dpr='2'] & {
+    background-image: url($url + '_163@2x.png');
+  }
+  [data-theme=theme][data-dpr='3'] & {
+    background-image: url($url + '_163@3x.png');
+  }
+  [data-theme=theme1][data-dpr='2'] & {
+    background-image: url($url + '_qq@2x.png');
+  }
+  [data-theme=theme1][data-dpr='3'] & {
+    background-image: url($url + '_qq@3x.png');
+  }
+  [data-theme=theme2][data-dpr='2'] & {
+    background-image: url($url + '_it666@2x.png');
+  }
+  [data-theme=theme2][data-dpr='3'] & {
+    background-image: url($url + '_it666@3x.png');
+  }
+}
+
+// 更换导航栏主题颜色
+@mixin bg_sub_color(){
+  background: $background-color-sub-theme;
+  // 用自定义的属性去做判断
+  [data-theme=theme1] & {
+    background: $background-color-sub-theme;
+  }
+  [data-theme=theme2] & {
+    background: $background-color-sub-theme2;
+  }
+}
+
+// 设置字体颜色
+@mixin font_color(){
+  color: $font-color-theme;
+  // 用自定义的属性去做判断
+  [data-theme=theme1] & {
+    color: $font-color-theme;
+  }
+  [data-theme=theme2] & {
+    color: $font-color-theme2;
+  }
+}
+
+// 选中字体颜色
+@mixin font_active_color(){
+  color: $font-active-color-theme;
+  // 用自定义的属性去做判断
+  [data-theme=theme1] & {
+    color: $font-active-color-theme1;
+  }
+  [data-theme=theme2] & {
+    color: $font-active-color-theme2;
+  }
+}
+
+// 导航栏底部下划线颜色
+@mixin border_color(){
+  border-color: $border-color-theme;
+  // 用自定义的属性去做判断
+  [data-theme=theme1] & {
+    border-color: $border-color-theme1;
+  }
+  [data-theme=theme2] & {
+    border-color: $border-color-theme2;
+  }
+}
+
